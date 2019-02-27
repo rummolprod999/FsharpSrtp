@@ -1,0 +1,10 @@
+/home/alex/Загрузки/546/bin/Debug/netcoreapp2.2/546.deps.json
+/home/alex/Загрузки/546/bin/Debug/netcoreapp2.2/546.runtimeconfig.json
+/home/alex/Загрузки/546/bin/Debug/netcoreapp2.2/546.runtimeconfig.dev.json
+/home/alex/Загрузки/546/bin/Debug/netcoreapp2.2/546.dll
+/home/alex/Загрузки/546/bin/Debug/netcoreapp2.2/546.pdb
+/home/alex/Загрузки/546/obj/Debug/netcoreapp2.2/546.fsprojAssemblyReference.cache
+/home/alex/Загрузки/546/obj/Debug/netcoreapp2.2/546.AssemblyInfoInputs.cache
+/home/alex/Загрузки/546/obj/Debug/netcoreapp2.2/546.AssemblyInfo.fs
+/home/alex/Загрузки/546/obj/Debug/netcoreapp2.2/546.dll
+/home/alex/Загрузки/546/obj/Debug/netcoreapp2.2/546.pdb

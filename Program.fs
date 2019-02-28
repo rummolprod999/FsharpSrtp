@@ -53,6 +53,8 @@ type Vector(x: float, y : float) =
      Vector(a * v.x, a * v.y)
    static member (*) (a: Vector, v: Vector) =
      Vector(a.x * v.x, a.y * v.y)
+   static member (%%*) (a: Vector, x: float) =
+     Vector(a.x * x, a.y * x)
    override this.ToString() =
      this.x.ToString() + " " + this.y.ToString()
 
@@ -64,15 +66,19 @@ let inline square
 let inline squareE
      x = (^a: (static member (*): ^a -> ^a -> ^a) (x,x)) // work only for Vector
 
+let inline squareV (x: ^a when ^a: (static member (%%*): ^a -> ^b -> ^a)) y = (%%*) x y
+
 let inline add arg1 arg2 =  ( ^a : (static member (+) : ^a * ^b -> ^a) (arg1, arg2))
 
 [<EntryPoint>]
 let main argv =
-    let rrr = inc<int> 5
-    printfn "%d" rrr
+    //let rrr = inc<int> 5
+    //printfn "%d" rrr
     //A() |> GetBodyAsyncNew |> fun x -> x.Result |> printfn "%d"
     //B() |> GetBodyAsyncNew |> Async.RunSynchronously |> printfn "%d"
     let v1 = Vector(1.0, 2.0)
+    let ss = squareV v1 5.
+    printfn "%A" ss
     //let yy = add 1 2
     //let ff = heterogenousAdd(5, 6)
     //printfn "%A" ff

@@ -3,7 +3,7 @@ open System
 open System.Threading.Tasks
 open System.Xml.Linq
 
-let inline inct< ^T when ^T : (static member Inc : int -> int)> i = ((^T) : (static member Inc : int -> int) (i))
+let inline inc< ^T when ^T : (static member Inc : int -> int)> i = ((^T) : (static member Inc : int -> int) (i))
 
 //let inline inc< ^T when ^T : (static member Inc : int -> int)> i = ^T.Inc i
 
@@ -59,16 +59,16 @@ type Vector(x: float, y : float) =
 let inline heterogenousAdd(value1 : ^T when ^T : (static member (+) : ^T * ^U -> ^T), value2 : ^U) = value1 + value2
 
 let inline square
-     (x: ^a when ^a: (static member (*): ^a -> ^a -> ^a)) = x*x // работает для int и т.д
+     (x: ^a when ^a: (static member (*): ^a -> ^a -> ^a)) = x*x // work for int and etc.
 
 let inline squareE
-     x = (^a: (static member (*): ^a -> ^a -> ^a) (x,x)) // работает только для Vector
+     x = (^a: (static member (*): ^a -> ^a -> ^a) (x,x)) // work only for Vector
 
 let inline add arg1 arg2 =  - ( ^a : (static member op_Addition : ^a * ^b -> ^a) (arg1, arg2))
 
 [<EntryPoint>]
 let main argv =
-    let rrr = inct<int> 5
+    let rrr = inc<int> 5
     printfn "%d" rrr
     //A() |> GetBodyAsyncNew |> fun x -> x.Result |> printfn "%d"
     //B() |> GetBodyAsyncNew |> Async.RunSynchronously |> printfn "%d"

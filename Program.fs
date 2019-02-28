@@ -54,6 +54,8 @@ type Vector(x: float, y : float) =
      Vector(a * v.x, a * v.y)
    static member (*) (a: Vector, v: Vector) =
      Vector(a.x * v.x, a.y * v.y)
+   static member (+) (a: Vector, v: Vector) =
+     Vector(a.x + v.x, a.y + v.y)
    static member (%%*) (a: Vector, x: float) =
      Vector(a.x * x, a.y * x)
    override this.ToString() =
@@ -81,8 +83,10 @@ let main argv =
     let ss = squareV v1 5.
     printfn "%A" ss
     //let yy = add 1 2
-    //let ff = heterogenousAdd(5, 6)
+    let ff = heterogenousAdd(5, 6)
     //printfn "%A" ff
+    let mm = heterogenousAdd(v1, v1)
+    printfn "mm is %A" mm
     let r = bar1 7.0
     printfn "%A" r
     let d = squareE v1

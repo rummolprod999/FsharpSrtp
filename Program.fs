@@ -64,7 +64,7 @@ let inline square
 let inline squareE
      x = (^a: (static member (*): ^a -> ^a -> ^a) (x,x)) // work only for Vector
 
-let inline add arg1 arg2 =  - ( ^a : (static member op_Addition : ^a * ^b -> ^a) (arg1, arg2))
+let inline add arg1 arg2 =  ( ^a : (static member (+) : ^a * ^b -> ^a) (arg1, arg2))
 
 [<EntryPoint>]
 let main argv =

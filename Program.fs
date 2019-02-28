@@ -1,12 +1,15 @@
-﻿// Learn more about F# at http://fsharp.org
-
+﻿
 open System
 open System.Threading.Tasks
 open System.Xml.Linq
 
+let inline inct< ^T when ^T : (static member Inc : int -> int)> i = ((^T) : (static member Inc : int -> int) (i))
+
+//let inline inc< ^T when ^T : (static member Inc : int -> int)> i = ^T.Inc i
+
 let inline GetBodyAsync (x : ^a when ^a: (member GetBodyAsync: unit -> ^b)) = (^a: (member GetBodyAsync: unit -> ^b) x)
 
-let inline GetBodyAsyncNew (x : ^a when ^a: (static member GetBodyAsync: unit -> ^b)) = ((), ())
+let inline GetBodyAsyncNew (x : ^a when ^a: (static member GetBodyAsync: unit -> ^b)) = ()
 
 type A() =
     static member GetBodyAsync() = Task.FromResult 1
@@ -65,8 +68,10 @@ let inline add arg1 arg2 =  - ( ^a : (static member op_Addition : ^a * ^b -> ^a)
 
 [<EntryPoint>]
 let main argv =
-    A() |> GetBodyAsyncNew |> fun x -> x.Result |> printfn "%d"
-    B() |> GetBodyAsyncNew |> Async.RunSynchronously |> printfn "%d"
+    let rrr = inct<int> 5
+    printfn "%d" rrr
+    //A() |> GetBodyAsyncNew |> fun x -> x.Result |> printfn "%d"
+    //B() |> GetBodyAsyncNew |> Async.RunSynchronously |> printfn "%d"
     let v1 = Vector(1.0, 2.0)
     //let yy = add 1 2
     //let ff = heterogenousAdd(5, 6)

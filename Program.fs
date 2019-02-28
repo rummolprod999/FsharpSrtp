@@ -2,14 +2,17 @@
 
 open System
 open System.Threading.Tasks
+open System.Xml.Linq
 
-let inline GetBodyAsync x = (^a: (member GetBodyAsync: unit -> ^b) x)
+let inline GetBodyAsync (x : ^a when ^a: (member GetBodyAsync: unit -> ^b)) = (^a: (member GetBodyAsync: unit -> ^b) x)
+
+let inline GetBodyAsyncNew (x : ^a when ^a: (static member GetBodyAsync: unit -> ^b)) = ((), ())
 
 type A() =
-    member this.GetBodyAsync() = Task.FromResult 1
+    static member GetBodyAsync() = Task.FromResult 1
 
 type B() =
-    member this.GetBodyAsync() = async { return 2 }
+    static member GetBodyAsync() = async { return 2 }
 
 
 type NumberExtensions =
@@ -24,6 +27,7 @@ let inline increment number =
 type Ext = Ext
     with
         static member Bar (ext : Ext, flt : float) = 1.0 + flt
+
         static member Bar (ext : Ext, flt : float32) = 1.0f + flt
 
 let inline bar (x : ^a) (y: ^b)=
@@ -61,8 +65,8 @@ let inline add arg1 arg2 =  - ( ^a : (static member op_Addition : ^a * ^b -> ^a)
 
 [<EntryPoint>]
 let main argv =
-    A() |> GetBodyAsync |> fun x -> x.Result |> printfn "%d"
-    B() |> GetBodyAsync |> Async.RunSynchronously |> printfn "%d"
+    A() |> GetBodyAsyncNew |> fun x -> x.Result |> printfn "%d"
+    B() |> GetBodyAsyncNew |> Async.RunSynchronously |> printfn "%d"
     let v1 = Vector(1.0, 2.0)
     //let yy = add 1 2
     //let ff = heterogenousAdd(5, 6)

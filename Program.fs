@@ -1,6 +1,16 @@
 ﻿// Learn more about F# at http://fsharp.org
 
 open System
+open System.Threading.Tasks
+
+let inline GetBodyAsync x = (^a: (member GetBodyAsync: unit -> ^b) x)
+
+type A() =
+    member this.GetBodyAsync() = Task.FromResult 1
+
+type B() =
+    member this.GetBodyAsync() = async { return 2 }
+
 
 type NumberExtensions =
     static member Increment (x:float) = x + 1.0    
@@ -47,11 +57,16 @@ let inline square
 let inline squareE
      x = (^a: (static member (*): ^a -> ^a -> ^a) (x,x)) // работает только для Vector
 
+let inline add arg1 arg2 =  - ( ^a : (static member op_Addition : ^a * ^b -> ^a) (arg1, arg2))
 
 [<EntryPoint>]
 let main argv =
+    A() |> GetBodyAsync |> fun x -> x.Result |> printfn "%d"
+    B() |> GetBodyAsync |> Async.RunSynchronously |> printfn "%d"
     let v1 = Vector(1.0, 2.0)
-    let ff = heterogenousAdd(5, 6)
+    //let yy = add 1 2
+    //let ff = heterogenousAdd(5, 6)
+    //printfn "%A" ff
     let r = bar1 7.0
     printfn "%A" r
     let d = squareE v1
@@ -65,4 +80,6 @@ let main argv =
 
     let v = squareE 5
     printfn "%A" d
+
+    
     0

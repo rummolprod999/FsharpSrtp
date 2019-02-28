@@ -61,6 +61,8 @@ type Vector(x: float, y : float) =
    override this.ToString() =
      this.x.ToString() + " " + this.y.ToString()
 
+let inline heterogenousAdd2(value1 : ^T when (^T or ^U) : (static member (+) : ^T * ^U -> ^T), value2 : ^U) = value1 + value2
+
 let inline heterogenousAdd(value1 : ^T when ^T : (static member (+) : ^T * ^U -> ^T), value2 : ^U) = value1 + value2
 
 let inline square
@@ -101,5 +103,4 @@ let main argv =
     let v = squareE 5
     printfn "%A" d
 
-    
     0

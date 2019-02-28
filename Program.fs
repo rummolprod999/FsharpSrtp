@@ -83,7 +83,7 @@ let main argv =
     let ss = squareV v1 5.
     printfn "%A" ss
     //let yy = add 1 2
-    let ff = heterogenousAdd(5, 6)
+    let ff = heterogenousAdd(999, 6) // not work
     //printfn "%A" ff
     let mm = heterogenousAdd(v1, v1)
     printfn "mm is %A" mm

@@ -9,10 +9,11 @@ let inline inc< ^T when ^T : (static member Inc : int -> int)> i = ((^T) : (stat
 
 let inline GetBodyAsync (x : ^a when ^a: (member GetBodyAsync: unit -> ^b)) = (^a: (member GetBodyAsync: unit -> ^b) x)
 
-let inline GetBodyAsyncNew (x : ^a when ^a: (static member GetBodyAsync: unit -> ^b)) = ()
+let inline GetBodyAsyncNew (x : ^a when ^a: (static member (%%++): ^a * unit -> ^b)) = (%%++) x ()
 
 type A() =
     static member GetBodyAsync() = Task.FromResult 1
+    static member (%%++) (a: 'a, b: 'b) = Task.FromResult 1
 
 type B() =
     static member GetBodyAsync() = async { return 2 }
@@ -74,7 +75,7 @@ let inline add arg1 arg2 =  ( ^a : (static member (+) : ^a * ^b -> ^a) (arg1, ar
 let main argv =
     //let rrr = inc<int> 5
     //printfn "%d" rrr
-    //A() |> GetBodyAsyncNew |> fun x -> x.Result |> printfn "%d"
+    A() |> GetBodyAsyncNew |> fun x -> x.Result |> printfn "%d"
     //B() |> GetBodyAsyncNew |> Async.RunSynchronously |> printfn "%d"
     let v1 = Vector(1.0, 2.0)
     let ss = squareV v1 5.

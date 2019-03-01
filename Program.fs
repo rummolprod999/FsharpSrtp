@@ -11,6 +11,8 @@ let inline GetBodyAsync (x : ^a when ^a: (member GetBodyAsync: unit -> ^b)) = (^
 
 let inline GetBodyAsyncNew (x : ^a when ^a: (static member (%%++): ^a * unit -> ^b)) = (%%++) x ()
 
+let inline GetBodyAsyncNewGen< ^a, ^b when ^a: (static member GetBodyAsync: unit -> ^b)> () = (^a: (static member GetBodyAsync: unit -> ^b) ())
+
 type A() =
     static member GetBodyAsync() = Task.FromResult 1
     static member (%%++) (a: 'a, b: 'b) = Task.FromResult 1
@@ -86,6 +88,7 @@ let main argv =
     //let _, num = try_parse "4"
     //printfn "%A" num
     A() |> GetBodyAsyncNew |> fun x -> x.Result |> printfn "%d"
+    GetBodyAsyncNewGen<A, Task<int>> () |> fun x -> x.Result |> printfn "GetBodyAsyncNewGen is %d"
     //B() |> GetBodyAsyncNew |> Async.RunSynchronously |> printfn "%d"
     let v1 = Vector(1.0, 2.0)
     let ss = squareV v1 5.

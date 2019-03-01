@@ -61,9 +61,13 @@ type Vector(x: float, y : float) =
    override this.ToString() =
      this.x.ToString() + " " + this.y.ToString()
 
+let inline try_parse x = (^a: (static member TryParse: string -> bool * ^a) x)
+
 let inline heterogenousAdd2(value1 : ^T when (^T or ^U) : (static member (+) : ^T * ^U -> ^T), value2 : ^U) = value1 + value2
 
 let inline heterogenousAdd(value1 : ^T when ^T : (static member (+) : ^T * ^U -> ^T), value2 : ^U) = value1 + value2
+
+let inline heterogenousAdd1(value1 : ^T when ^U : (static member (+) : ^T * ^U -> ^T), value2 : ^U) = value1 + value2
 
 let inline square
      (x: ^a when ^a: (static member (*): ^a -> ^a -> ^a)) = x*x // work for int and etc.
@@ -79,13 +83,16 @@ let inline add arg1 arg2 =  ( ^a : (static member (+) : ^a * ^b -> ^a) (arg1, ar
 let main argv =
     //let rrr = inc<int> 5
     //printfn "%d" rrr
+    //let _, num = try_parse "4"
+    //printfn "%A" num
     A() |> GetBodyAsyncNew |> fun x -> x.Result |> printfn "%d"
     //B() |> GetBodyAsyncNew |> Async.RunSynchronously |> printfn "%d"
     let v1 = Vector(1.0, 2.0)
     let ss = squareV v1 5.
     printfn "%A" ss
     //let yy = add 1 2
-    let ff = heterogenousAdd(999, 6) // not work
+    //let ff = heterogenousAdd(999, 6) // not work
+    let ff = heterogenousAdd1(999, 6) // work
     //printfn "%A" ff
     let mm = heterogenousAdd(v1, v1)
     printfn "mm is %A" mm

@@ -6,6 +6,7 @@ open System.Xml.Linq
 let inline inc< ^T when ^T : (static member Inc : int -> int)> i = ((^T) : (static member Inc : int -> int) (i))
 
 //let inline inc< ^T when ^T : (static member Inc : int -> int)> i = ^T.Inc i
+let inline GetBodyAsyncFirst x = (^a: (member GetBodyAsync: unit -> ^b) x)
 
 let inline GetBodyAsync (x : ^a when ^a: (member GetBodyAsync: unit -> ^b)) = (^a: (member GetBodyAsync: unit -> ^b) x)
 
